@@ -10,3 +10,8 @@ RefCount 자체는 ThreadSafe하지만, 대입/치환 등 set하는 부분은 �
 이럴 경우  atomic 버전을 만들거나, lock을 걸거나 별도 처리가 필요
 
 결과적으로 RefCount 관리하는 부분까지 상속받아 객체를 만들기로 합의된 경우, 원본객체주소와 RefCount블록이 사실 동일한 객체가 되어 복사도 안전하지만 일반적인 shared_ptr라면 아니다.
+
+
+또한 표준 shared_ptr의 경우 내부적으로 refcounting과 weakcounting 2개가 메모리에 같이 저장이 된다.
+더이상 객체를 참조하는 포인터들이 없어지면 해당 객체를 삭제하고 refcounting영역을 삭제하지만 weakcounting 는 남아있고 weakcounting을 사용하여 shared_ptr이 참조하는 객체가 사라젔는지 아직 할당이되어있는지 판단 할 수 있다. 
+
